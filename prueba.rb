@@ -28,4 +28,15 @@ end
 
 photos = build_web_page(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg')["photos"])
 
-File.write('output.html', photos.to_s)
+File.write('images.html', photos.to_s)
+
+def photos_count(request)
+    camera_name = request.map{ |k| k['camera']['name'] }
+    grouped = camera_name.group_by{ |cam_name| cam_name }
+    num_photo = grouped.each do |cam_grouped, photo_qty|
+        grouped[cam_grouped] = photo_qty.count 
+    end
+    return num_photo
+end
+
+pp photos_count(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg')["photos"])
