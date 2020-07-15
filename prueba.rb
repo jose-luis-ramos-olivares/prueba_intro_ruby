@@ -27,7 +27,7 @@ def build_web_page(request)
 end
 
 photos = build_web_page(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg')["photos"])
-File.write('images.html', photos.to_s)
+File.write('mars-photos.html', photos.to_s)
 
 def photos_count(request)
   camera_name = request.map{ |filter| filter['camera']['name'] }
