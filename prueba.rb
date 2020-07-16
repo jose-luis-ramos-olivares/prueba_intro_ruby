@@ -3,8 +3,8 @@ require "net/http"
 require "json"
 require 'openssl'
 
-def request(address)
-  url = URI(address)
+def request(address, api_key="l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg")
+  url = URI("#{address}&api_key=#{api_key}")
   
   https = Net::HTTP.new(url.host, url.port);
   https.use_ssl = true
@@ -26,7 +26,7 @@ def build_web_page(request)
   return html
 end
 
-photos = build_web_page(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg')["photos"])
+photos = build_web_page(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10')["photos"])
 File.write('mars-photos.html', photos.to_s)
 
 def photos_count(request)
@@ -38,4 +38,4 @@ def photos_count(request)
   return num_photo
 end
 
-pp photos_count(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg')["photos"])
+pp photos_count(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10')["photos"])
