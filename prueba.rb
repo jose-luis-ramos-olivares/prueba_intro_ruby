@@ -11,6 +11,8 @@ def request(address, api_key="l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg")
   https.verify_mode = OpenSSL::SSL::VERIFY_PEER
   
   request = Net::HTTP::Get.new(url)
+  request['app_id'] = '1efc46b5-f672-4501-a4d2-5296edd0fe00'
+  request['app_key'] = 'l8Ecjsg4vhUOYJBD8xT0I3PmeBao2xpccBQZadPg'
   
   response = https.request(request)
   JSON.parse response.read_body
@@ -27,7 +29,7 @@ def build_web_page(request)
 end
 
 photos = build_web_page(request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10')["photos"])
-File.write('mars-photos.html', photos.to_s)
+File.write('mars_photos.html', photos.to_s)
 
 def photos_count(request)
   camera_name = request.map{ |filter| filter['camera']['name'] }
